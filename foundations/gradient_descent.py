@@ -8,5 +8,3 @@ class Solution:
         for _ in range(iterations):
             minimizer = minimizer - (learning_rate * 2*minimizer)
         return round(minimizer,5)
-
-#print(Solution.get_minimizer(0, 0.01, 5))
