@@ -10,6 +10,6 @@ class Solution:
         # return np.round(your_answer, 4)
         shifted = z - np.max(z)
         num = np.exp(shifted)
-        denom= np.sum(np.exp(shifted))
+        denom = np.sum(num)
         return np.round((num/denom),4)
         
