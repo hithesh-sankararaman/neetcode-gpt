@@ -18,7 +18,6 @@ class Solution:
 
         #forward pass
         z1 = W1 @ x.T + b1
-        print(z1.shape)
         a1 = np.maximum(0,z1)
         z2 = a1 @ W2.T + b2
         mse = np.mean((z2 - y_true)**2)
@@ -27,15 +26,15 @@ class Solution:
         n = len(y_true) if y_true.ndim>0 else 1
         dz2 = 2 * (z2 - y_true) / n #dl/dz2
         # dL/dW2 = dl/dz2 * dz2/dw2
-        dw2 = dz2.reshape(-1, 1) @ a1.reshape(1, -1)
+        #dw2 = dz2.reshape(-1, 1) @ a1.reshape(1, -1)
+        dw2=np.outer(dz2,a1)
         #dl/db2 = dl/dz2 * dz2/db2
         db2 = dz2
         #dl/da1 = dl/dz2*dz2/da1
         da1 = W2.T @ dz2
-        da1.flatten()
         #dl/dw1 = dl/da1*da1/dw1
         dz1 = da1 * (z1>0).astype(float)
-        dw1 = dz1.reshape(-1, 1) @ x.reshape(1, -1)  # dL/dW1
+        dw1 = np.outer(dz1,x) #dz1.reshape(-1, 1) @ x.reshape(1, -1)  # dL/dW1
         db1 = dz1
         # Architecture: x -> Linear(W1, b1) -> ReLU -> Linear(W2, b2) -> predictions
         # Loss: MSE = mean((predictions - y_true)^2)
